@@ -1,0 +1,684 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{fontspec}
+\renewcommand{\baselinestretch}{1.5} 
+\setmainfont{Times New Roman}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage[skip=10pt plus1pt, indent=0pt]{parskip}
+\usepackage[
+lmargin=0.8in,
+rmargin=0.8in,
+tmargin=0.8in,
+bmargin=0.8in]{geometry}
+%margin=0.8in]{geometry}
+\usepackage{makecell}
+\usepackage{lscape}
+\usepackage{color,soul}
+\usepackage[toc,page,title]{appendix}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+
+
+\usepackage{tikz}
+\usepackage[edges]{forest}
+
+\usepackage[
+backend=biber,
+style=apa,
+sorting=nyt
+]{biblatex}
+\addbibresource{references.bib}
+
+\title{40.316 Game Theory}
+\author{Gabriel Yong}
+\date{April 2024}
+
+\begin{document}
+\pagenumbering{roman}
+
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+          \includegraphics[width=0.6\textwidth]{img/Header.png}  
+       \vspace{2cm}
+     
+       
+        \Huge
+       \textbf{40.316 Game Theory Project Report}
+       
+       
+
+       \vspace{0.5cm}
+       \Large
+       Wage Salary Negotiation
+            
+       \vspace{1.5cm}
+       \textbf{1005154 Yong Zhe Rui Gabriel}\\
+       \textbf{1005467 Yogesh Vivek Shelgaonkar }\\
+       \textbf{1005517 Ong Kai Xin Chloe }\\
+
+       
+       
+        
+       \vfill
+            
+   \end{center}
+\end{titlepage}
+
+\section*{Executive Summary}
+This project analyses various scenarios that may occur in professional settings, particularly focusing on wage negotiation and ethical dilemmas in the workplace. There are 3 games that are analysed in this .
+
+Game 1: Wage Negotiation
+\newline
+Two cases of wage negotiation are analysed in this game: Basic Wage Negotiation and Incomplete Information Wage Negotiation. The basic case is a static game where the the applicant can either choose to apply or don't apply and the company may choose to accept or reject the application. The solution analysis shows that the applicant needs to know their worth and the alternative jobs that may be available for them. In the incomplete information game, there are additional factors such as the welfare that a company provides and how much the applicant values that welfare. These additional factors are only known to the respective players and the solution analysis shows that a higher value for welfare for the applicant leads to an overall higher payoff. With a lower value for welfare, the applicant needs to ask for a higher wage to maximise their payoff.
+
+
+Game 2: Contract Types
+\newline
+The can offer either contract I, which offers wage $w_1$ with no bonus, or contract II, which offers wage $w_2$ with a bonus B if the company produces high yield with probability  $p$. The second part of the game analysis after accepting the contract, how much effort should the employee exert? The analysis of the game shows that the company would want to offer contract II to the employee, and the employee would want to exert high effort to gain B. This is similar to real life scenarios where companies offer bonuses to employees for putting in high effort. 
+
+Game 3: Dishonest Company
+\newline
+After working at a company for a certain period of time, if the employee realises that the company is engaging in suspicious activities, should they voice out their concerns, stay quiet or quit the company. The company may also choose to respond or ignore the concerns raised by the employee. The solution analysis shows that if the cost for engaging in suspicious activities for the company is high and the cost for voicing out for the employee is low, the company will choose to remain honest, and the reverse is true if the cost for engaging in suspicious activities is low and the cost for voicing out is high. This highlights that it is important to impose harsh punishments for companies that are dishonest and reduce the cost for voicing out in order to maintain a fair working environment.
+
+\newpage
+
+\tableofcontents
+
+
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+The journey from a fresh grad to a fully fledged working adult is filled with many challenges. From wage negotiation to deciding what to do when your company starts violating health and safety regulations for more profit, these decisions can be eased up and the effects can be analyzed using Game Theory to understand the decisions you can make to influence a company's decision and how to maximize your payoffs.
+
+Our project will cover 3 different types of games. Firstly we will dive into the details of Wage Negotiation and understand what kind of wage an individual can request to maximize their payoff. We then go into the details on the amount of effort an employee should put into their job depending on the kind of contract offered to them. Lastly, we go into the interesting case when companies start making questionable decisions to gain more profit and find out what an employee should do in each case.
+
+% \section{Literature Review}
+
+% \section{Problem Statement}
+
+% \section{Model Formulation}
+
+\section{Wage Negotiation}
+
+Our first game is wage negotiation. We examine a simple case in section \ref{sec:basic} and move on to a case with incomplete information in section \ref{sec:incomplete} to consider the effects of welfare provided by the company.
+
+\subsection{Basic Case}\label{sec:basic}
+
+For the basic case the players are the job applicant and the company.
+
+Their action state are as follows:
+\begin{itemize}[noitemsep]
+    \item Applicant: Apply or Don't Apply for the job
+    \item Company: Accept or Reject the job application
+\end{itemize}
+
+We formulate a wage negotiation static game between an applicant and a company. Both players can decide to accept each other and have the applicant work for the company, or in every other case, the deal doesn't go through and the applicant carries on with their life. Game is as shown in Table \ref{tab:basiccase}.
+
+The variables are
+\begin{itemize}[noitemsep]
+    \item $p$: Productivity of applicant
+    \item $w$: Wage requested by applicant/Wage paid by company
+    \item $u$: Wage received by the alternative if not working at job
+\end{itemize}
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{clcc}
+                                               & \multicolumn{1}{c}{}        & \multicolumn{2}{c}{Applicant}                                 \\ \cline{3-4} 
+                                               & \multicolumn{1}{l|}{}       & \multicolumn{1}{l|}{Apply}     & \multicolumn{1}{l|}{Don't Apply} \\ \cline{2-4} 
+\multicolumn{1}{c|}{\multirow{2}{*}{Company}} & \multicolumn{1}{l|}{Accept} & \multicolumn{1}{c|}{(p - w, w)} & \multicolumn{1}{c|}{(0, u)} \\ \cline{2-4} 
+\multicolumn{1}{c|}{}                          & \multicolumn{1}{l|}{Reject} & \multicolumn{1}{c|}{(0, u)}     & \multicolumn{1}{c|}{(0, u)} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\caption{Payoff Matrix for Basic Case}
+\label{tab:basiccase}
+\end{table}
+
+
+
+\subsubsection{Solution Analysis}
+
+The company will see 'Accept' as a pure strategy if $p-w > 0$ and likewise for the applicant if $w > u$ then 'Apply' is the pure strategy. Thus, the Pure Strategy Nash Equilibrium of the static game is (Apply, Accept) with a payoff of ($p-w$, $w$), if $p-w \geq 0$ and $w > u$.
+
+We see that this means $p$ is the hard cap to the $w$ that the applicant can request before they will always get rejected from the job.
+
+\subsubsection{Takeaways}
+There are some basic takeaways from this game based on the constraints of the pure strategy.
+
+Firstly, the applicant needs to know their worth (i.e., productivity). Their productivity determines the highest wage they can demand before the company no longer concerns themselves with the applicant.
+
+Another key takeaway is for the applicant to know their options (is their $u > w$?). If they have alternative job offers (represented by the wage received $u$), then the applicant should also consider other jobs instead.
+
+
+\subsection{Company Welfare (Incomplete Information)}\label{sec:incomplete}
+
+In the game of wage negotiation, we should consider other factors that can affect the applicant's payoff beyond just their wage. Thus, we formulated a new game with the following payoffs as shown in Table \ref{tab:welfarepayoff}.
+
+\begin{table}[H]
+\begin{center}
+    \begin{tabular}{clcc}
+                                               & \multicolumn{1}{c}{}        & \multicolumn{2}{c}{Applicant}                                 \\ \cline{3-4} 
+                                               & \multicolumn{1}{l|}{}       & \multicolumn{1}{l|}{Apply}     & \multicolumn{1}{l|}{Don't Apply} \\ \cline{2-4} 
+\multicolumn{1}{c|}{\multirow{2}{*}{Company}} & \multicolumn{1}{l|}{Accept} & \multicolumn{1}{c|}{($p-w -\theta$, $w-e+c\theta$)} & \multicolumn{1}{c|}{($0$, $0$)} \\ \cline{2-4} 
+\multicolumn{1}{c|}{}                          & \multicolumn{1}{l|}{Reject} & \multicolumn{1}{c|}{($0$, $0$)}     & \multicolumn{1}{c|}{($0$, $0$)} \\ \cline{2-4} 
+\end{tabular}
+\end{center}
+\caption{Payoff Table with Incomplete Information of Welfare}
+\label{tab:welfarepayoff}
+\end{table}
+
+
+Where $w, e, p$ are as defined in previous sections but $\theta$ is the unknown factor of the amount of welfare a company, while $c$ is the amount that the applicant values the welfare. For this case $0 \leq c \leq 1$.
+
+Should the applicant not accept the company's offer or vice versa, then their payoff will both be $0$.
+
+First, we assume that there is a random variable $\theta$ where $\theta$ is the amount of welfare a company provides. This is private information known only to the company and the applicant is unaware.
+
+For the intents of our case study, we assume $\theta \sim U(0, \beta)$
+
+We then see that for the company, The basic strategy is to only accept the applicant if they propose a wage $w$ such that $p - w \theta \geq 0$.
+
+Thus, this means that the applicant only has a non-zero payoff if $p - w\geq \theta$. Since we are assuming that the applicant's $p$ is fixed, they can only change the $w$ they request. It is clear that they can then set $w$ such that $p-w\geq \beta$ to get always accepted by the company. However, we want to model the situation where the applicant does not know if their net productivity gain is more than the welfare the company provides.
+
+We can then see that the expected payoff for the applicant is as follows:
+\begin{align*}
+    &\mathbb{E}[\text{Applicant Payoff}] = U_A(w)  \\
+    &= \int_0^{\beta} \mathbf{1}_{p-w\geq \theta}\left[(w - e + c\theta)\right] f(\theta) d\theta \\
+    &= \frac{p-w}{\beta} \left(\left(1 - \frac{c}{2}\right)w - e + \frac{cp}{2}\right)
+\end{align*}
+
+The optimal $w^* = \dfrac{p-cp + e}{2 - c}$:
+
+Workings are shown in Appendix \ref{app:incomplete-working}
+
+\subsubsection{Solution Analysis}
+
+We see that interestingly for the following values of $c$, $w^*$ is as follows:
+
+\begin{itemize}[noitemsep]
+    \item $c = 0$: $w^* = \frac{p+e}{2}$
+    \item $c = 1$: $w^* = e$
+\end{itemize}
+
+This means that if we are less satisfied with the welfare provided as an applicant, we should always request for a higher wage (since $p > e$ because we assume $p > w$ and $w > e$) to maximize our payoffs.
+
+Simply looking at the optimal wage requested does not reveal the full story behind the applicant's payoff. Thus we examine $U_A(w^*)$ as well. We substitute in $w^*$:
+\begin{align*}
+    U_A(w^*) &= \left(\frac{p}{\beta} - \frac{p-cp + e}{\beta(2-c)}\right) \left(\left(\frac{2-c}{2}\right)\frac{p-cp+e}{2-c} - e + \frac{cp}{2}\right) \\
+    &= \left(\frac{p}{\beta} - \frac{p-cp + e}{\beta(2-c)}\right) \left(\frac{p-cp+e}{2} - e + \frac{cp}{2}\right) \\
+    &= \frac{p(2-c) - p + cp - e}{\beta(2-c)} \left(\frac{p-e}{2} \right) \\
+    &= \frac{p - e}{\beta(2-c)} \left(\frac{p-e}{2} \right) \\
+    &= \frac{(p - e)^2}{2\beta(2-c)} \\
+\end{align*}
+We see that when $c = 1$, the expected payoff of the applicant is double compared to when $c = 0$.
+
+There are a few takeaways from this game
+
+\begin{itemize}[noitemsep]
+    \item Being satisfied with welfare will make you happier overall
+    \item We can try to do things to improve $c$. Companies can do more to clarify with their applicants about the welfare benefits to improve on$c$.
+    \item With a lower satisfaction in the welfare, we need to ask for more wage to maximize our payoff.
+\end{itemize}
+
+\section{Contract Types}
+
+\subsection{Formulation}
+
+Suppose now the company chooses to go ahead with the employee, what type of contract will they offer and should the employee choose to put in effort into the job?
+
+The company can choose between 2 contracts to offer the employee. The details of the contracts are as follows:
+
+\begin{itemize}[noitemsep]
+    \item Contract I: Contract offers employees a wage of $w_1$, with no bonus. 
+    \item Contract II: Contract offers employees a wage of $w_2$ and a bonus of $B$ if the company produces a high yield with probability $p$. 
+\end{itemize}
+
+The company can choose to either offer the employee contract I, II or fire the employee. The employee can then choose to either accept the offer or quit and get a wage of $U_0$ elsewhere. 
+
+After accepting the offered contract, the employee can choose to either put in high or low effort into the job. If they choose to put in high effort, $e$, there is a probability of $p$ that the company produces an extra $M$ amount of yield on top of base yield $Y$. Otherwise, with a probability of $1-p$, the company may produce a yield of only $Y$ despite putting in high effort of $e$. 
+
+Therefore, the payoffs are as follows:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}}
+        Contract & High Yield & Company's Payoff & Employee's Payoff \\
+        \hline
+        I & No & $Y - w_1$ & $w_1$ \\
+        \hline
+        I & Yes & $Y + M - w_1$ & $w_1 - e$ \\
+        \hline
+        II & No & $Y - w_2$ & $w_2$ \\
+        \hline
+        II & Yes & $Y + M - w_2 - B$ & $w_2 + B - e$ \\
+    \end{tabular}
+    \caption{Payoff Table}
+    \label{tab:my_label}
+\end{table}
+
+If an employee accepts the company's offer and chooses to exert low effort, their payoff would be their basic wage, $w_i$, where $i = 1,2$. Moreover, the company's payoff would be their profit, $Y-w_i$.
+
+Therefore, the dynamic game tree can be illustrated as shown in Figure \ref{fig:tree}. Note that $X$ is a random variable that denotes the event of  probability $p$ of getting a high yield after the employee puts in high effort.
+
+\begin{figure}
+\begin{center}
+\begin{forest}
+for tree = {
+grow=right,
+minimum size=3ex,
+align=center,
+inner sep=2pt,
+edge={->},
+my edge label/.style 2 args={
+  edge label={node[midway, font=\sffamily\scriptsize, #1]{#2}},
+},
+s sep=8mm
+}
+[C
+    [{($0$, $U_o$)}, my edge label={above}{\xcancel{Fire}}]
+    [E,  my edge label={above}{\xcancel{Contract I}}, edge=black
+      [{($0$, $U_o$)}, my edge label={above}{\xcancel{Quit}}]
+      [E, my edge label={above}{Accept}
+        [X,my edge label={above}{\xcancel{High}}, edge=black
+            [{($Y + M - w_1$, $w_1 - e$)},  my edge label={above}{p}]
+            [{($Y - w_1$, $w_1 - e$)},  my edge label={above}{1-p}]
+        ]
+        [{($Y-w_1$, $w_1$)},  my edge label={above}{Low}, edge=black
+        ]
+      ]
+    ]
+    [E,  my edge label={above}{Contract II}, edge=black
+      [{($0$, $U_o$)}, my edge label={above}{\xcancel{Quit}}]
+      [E, my edge label={above}{Accept}, edge = black
+        [X,  my edge label={above}{High}, edge=black
+            [{($Y + M - w_2 - B$, $w_2 - e + B$)},  my edge label={above}{p}]
+            [{($Y - w_2$, $w_2 - e$)},  my edge label={above}{1-p}]
+        ]
+        [{($Y-w_2$, $w_2$)},  my edge label={above}{\xcancel{Low}}, edge=black]
+      ]
+    ]
+]
+
+\end{forest}
+\end{center}
+\caption{Payoff Tree for choosing between contract I and II}
+\label{fig:tree}
+\end{figure}
+
+\subsection{Which Contract to Offer? What Effort to Exert?}
+
+So which contract is the most beneficial for the company? Firstly, we assume that $w_i > U_0$ for $i=1$, $2$ and that the net productivity $Y-w_i> 0$ and $M > B$. This makes it so that the company will choose to offer a contract to the employee and that the employee will opt to accept the contract. We then compare the expected payoff of the 2 contracts for the employee. The expected payoffs for the employee are in Table \ref{tab:expected-payoff}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{0.2\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}}
+        Contract & Effort & Expected Employee's Payoff \\
+        \hline
+        I & Low & $w_1$ \\
+        \hline
+        I & High & $w_1 - e$ \\
+        \hline
+        II & Low & $w_2$ \\
+        \hline
+        II & High & $w_2 + pB - e$ \\
+    \end{tabular}
+    \caption{Employee Expected Payoff (Workings in Appendix \ref{app:expected-working})}
+    \label{tab:expected-payoff}
+\end{table}
+We see that for contract I, employees would want to put in low effort as compared to high effort since $w_1 < w_1 - e$. Thus, companies may not be as incentivised to offer contract I as employees would want to put in low effort. This eliminates the possibility of companies ever receiving the additional payoff of $M$.
+
+We see that given contract II, the employee would choose to put in high effort if the following inequality is satisfied.
+\begin{align*}
+    w_2 - e + pB \geq w_2 \\
+    pB \geq e
+\end{align*}
+
+We also assume that $U_0 < w_2 - e + pB$. Thus, if offered contract II, employees would accept the offer and put in high effort as it has a higher payoff.
+
+Moreover, we compare the expected payoffs for each contract as shown below.
+\begin{align*}
+    \mathbb{E}(\text{Company's payoff for offering contract I})& = Y-w_1 \\
+    \mathbb{E}(\text{Company's payoff for offering contract II})& = (1-p)(Y-w_2) + (p)(Y+M-w_2-B)\\
+    & = Y - w_2 + p(M - B)
+\end{align*}
+
+For contract II to be the contract of choice:
+\begin{align*}
+    Y-w_2 + pM - pB &> Y - w_1 \\
+    p(M - B) &> w_2 - w_1
+\end{align*}
+
+\subsubsection{Solution Analysis}
+
+We should note that typically, from the company's perspective, we would want the packages from contract I and II to be similar ($w_2 + pB = w_1$). This means that $w_2 \leq w_1$ usually. This would mean that as long as $pM > 0$, companys will want to offer contract II due to it's higher payoff. Therefore, companies would offer contract II as it has a higher payoff as compared to contract I and choosing to fire their employee (since $M > 0$).
+
+Hence, by using backward induction. We first observe that from a company's perspective, it would always choose to offer contract II to employees as it would incentivise employees to exert high effort and potentially produce high yield. This could explain why companys often use bonuses to motivate employees to work harder for their company to boost their productivity. 
+
+Moreover, employees would choose to accept and put in high effort if companies offer them contract II. They will also choose to improve their chances of getting higher payoff by putting in high effort. An interesting takeaway is that employee's can improve their payoff by improving their $p$. The probability $p$ could be interpreted as an employee's skill set, team productivity or communication. 
+
+\subsection{Extension: Should the employee put in low effort?}
+
+Initially, we assumed that when an employee chooses to put in low effort, $Y$ is always obtained. However, to elaborate on the formulated game, we will consider the possibility of an employee producing a higher yield of $Y+M$ despite putting in low effort. 
+
+To formulate this game, we assume that the probability of the employee exerting low effort and producing a basic yield is $p_b$, and the probability of producing a higher yield is $p_a$. Thus, the probability of getting caught by the company for skiving is $1-p_a-p_b$. Should the employee be caught, they will be fired and receive a wage of $U_0$. The game tree is elaborated as shown in Figure \ref{fig:shirk}.
+
+\begin{figure}[H]
+\begin{center}
+\begin{forest}
+for tree = {
+grow=right,
+minimum size=3ex,
+align=center,
+inner sep=2pt,
+edge={->},
+my edge label/.style 2 args={
+  edge label={node[midway, font=\sffamily\scriptsize, #1]{#2}},
+},
+s sep=8mm
+}
+[C
+    [{($0$, $U_o$)}, my edge label={above}{\xcancel{Fire}}]
+    [E,  my edge label={above}{\xcancel{Contract I}}, edge=black
+      [{($0$, $U_o$)}, my edge label={above}{\xcancel{Quit}}]
+      [E, my edge label={above}{Accept}
+        [X,my edge label={above}{\xcancel{High}}, edge=black
+            [{($Y + M - w_1$, $w_1 - e$)},  my edge label={above}{p}]
+            [{($Y - w_1$, $w_1 - e$)},  my edge label={above}{1-p}]
+        ]
+        [{($Y-w_1$, $w_1$)},  my edge label={above}{Low}, edge=black
+        ]
+      ]
+    ]
+    [E,  my edge label={above}{Contract II}, edge=black
+      [{($0$, $U_o$)}, my edge label={above}{\xcancel{Quit}}]
+      [E, my edge label={above}{Accept}
+        [X,  my edge label={above}{\xcancel{High}}, edge=black
+            [{($Y + M - w_2 - B$, $w_2 - e + B$)},  my edge label={above}{p}]
+            [{($Y - w_2$, $w_2 - e$)},  my edge label={above}{1-p}]
+        ]
+        
+        [X,  my edge label={above}{Low}, edge=black
+            [{($Y + M - w_2 - B$, $w_2 + B$)},  my edge label={above}{$p_a$}]
+            [{($Y - w_2$, $w_2$)},  my edge label={above}{$p_b$}]
+            [{($0$, $U_o$)},  my edge label={above}{$1 - p_a - p_b$}]
+        ]
+        ]
+      ]
+    
+]
+
+\end{forest}
+\end{center}
+\caption{Payoff Tree for choosing between contract I and II (shirking case)}
+\label{fig:shirk}
+\end{figure}
+
+Therefore, we can calculate the employee's payoff for accepting contract II and putting in low effort as shown below.
+\begin{align*}
+    \mathbb{E}(\text{Employee's payoff}) & = p_a(w_2) + p_b(w_2 + B) + (1-p_a-P_b)(U_o) \\
+    & = p_aB + w_2 - (1-p_b-p_a)(w_2-U_o)  
+\end{align*}
+
+\subsubsection{Solution Analysis}
+Hence, employees would choose to put in low effort if the expected payoff is higher than when they put in high effort.
+\begin{align*}
+    p_aB + w_2 - (1-p_b-p_a)(w_2-U_o) &\geq pB + w_2 - e \qquad \text{where $p_a < p$} \\
+    p_aB + w_2 - (1-p_b-p_a)(w_2-U_o) &\geq (p - p_a)B + p_aB + w_2 - e \\
+    (1-p_b-p_a)(w_2-U_o) &\leq e - (p - p_a)B\\
+\end{align*}
+As seen in the inequality above, we see that the following 5 conditions could cause the inequality to hold true and the employee to choose to shirk:
+\begin{itemize}[noitemsep]
+    \item $e$, the effort the employee needs to exert is too high
+    \item $(1-p_b-p_a)$, the probability that the employee gets caught shirking is low
+    \item $(w_2 - U_0)$, the opportunity cost of losing the job is low
+    \item $B$, the bonus received is low
+    \item $(p - p_a)$, the difference in probability of achieving high yield through putting in effort and shirking is low
+\end{itemize}
+
+Hence, knowing the above outcomes, employees can better equip themselves in the workplace.
+
+\section{Dishonest Company}
+
+After working at a company for a period of time, it is crucial for employees to know what is the best course of action if they find out that their company is engaging in suspicious or even illegal activities, which gives them an additional payoff of $M$ to the company. 
+
+The company can
+\begin{itemize}[noitemsep]
+    \item Remain honest and profit $p$ or
+    \item Engage in suspicious activities to gain $p + M$
+\end{itemize}
+
+In response, the employee can choose to
+\begin{itemize}[noitemsep]
+    \item Quit and draw a wage of $U$
+    \item Stay at the company and keep quiet, incurring a cost of $\delta$ due to their dissatisfaction. They will also cost the company $d_1$ in productivity decrease.
+    \item Voice out their concerns about the activities of the company. This incurs a cost $v$ as they may face retaliation from the company and might affect their position in the company or their future job prospects.
+\end{itemize}
+
+Should the employee voice out, the company can choose to
+\begin{itemize}[noitemsep]
+    \item Respond to the concerns raised by the employee, incurring a cost of $r$ for responding and a bribe $r_w$, would be given to the employee
+    \item Ignore the concerns of the employee
+\end{itemize}
+
+Finally, if the company ignores the concerns raised, the employee can stay at the company and incur a cost of $\delta$ dissatisfaction as well as a decrease in productivity of $d_2$ or leave.
+
+\underline{Variables}
+\newline
+$p$ = Productivity of the employee
+\newline
+$w$ = Wage paid to the employee
+\newline
+$\delta$ = Employee dissatisfaction with company
+\newline
+$M$ = Additional yield from suspicious activities
+\newline
+$d_1$ = Decrease in productivity of the employee from finding out the company's suspicious activities 
+\newline
+$d_2$ = Cost of ignoring the concerns voiced out by the employee.
+\newline
+$r$ = Cost of responding
+\newline
+$r_w$ = Bribe paid to the employee/satisfaction gained back by company's response
+\newline
+$v$ = Cost of voicing out against the company inclusive of dissatisfaction
+\newline
+$U$ = Wage at other companies
+\begin{figure}[H]
+\begin{center}
+\begin{forest}
+for tree = {
+grow=south,
+minimum size=3ex,
+align=center,
+inner sep=2pt,
+edge={->},
+my edge label/.style 2 args={
+  edge label={node[midway, font=\sffamily\scriptsize, #1]{#2}},
+},
+s sep=10mm
+}
+[C
+    [{($p-w$, $w$)}, my edge label={above}{Honest}]
+    [E,  my edge label={above}{Suspicious}, edge=black
+      [{($0$, $U$)}, my edge label={above}{Quit}]
+      [{($p + M - w - d_1$, $w - \delta$)}, my edge label={above}{Stay}]
+      [C, my edge label={above}{Voice}
+        [{($p + M - w - r - r_w$, $w - v + r_w$)},  my edge label={above}{Respond}, edge=black]
+        [E,  my edge label={above}{Ignore}, edge=black
+          [{($p + M - w - d_2$, $w - v$)},  my edge label={above}{Stay}]
+          [{($0$, $U - v$)},  my edge label={above}{Quit}]
+        ]
+      ]
+    ]
+]
+\end{forest}
+\end{center}
+\caption{Game Tree for Company Engaging in Suspicious Activities}
+\end{figure}
+
+In order to determine the sub-game perfect equilibrium, we look into 2 different cases where the punishment for suspicious activities is high and cost of voicing out is low and the alternate case of low punishment and high cost of voicing out. 
+
+An initial assumption is that $w-\delta > U$ and likewise $w > U$, otherwise when we do backwards induction, the employee should always choose to quit due to having a better option elsewhere. We also assume that $d_1$ is smaller than $M$ such that the employee is not significantly high impact such that their dissatisfaction will significantly impact the bonus of $M$.
+
+
+\subsection{Case 1: Punishment for suspicious activities is high, cost of voicing out is low}
+
+In this case, we assume that if the cost for engaging in suspicious activities is high, $M-r-r_w <0$, and when the cost of voicing out is low, $v < \delta$. We also note that $d_2 > r + r_w$ since potentially ignoring the employee's voicing out could result in larger backlash from employees and public outcry.
+
+When the punishment for engaging in suspicious activities is high, and the cost of voicing out is low, the company is incentivised to be honest with their activities, and the employee is encouraged to voice out their concerns, as shown in Figure \ref{fig:case1}. 
+
+\begin{figure}[H]
+\begin{center}
+\begin{forest}
+for tree = {
+grow=south,
+minimum size=3ex,
+align=center,
+inner sep=2pt,
+edge={->},
+my edge label/.style 2 args={
+  edge label={node[midway, font=\sffamily\scriptsize, #1]{#2}},
+},
+s sep=10mm
+}
+[C
+    [{($p-w$, $w$)}, my edge label={above}{Honest}, edge = black]
+    [E,  my edge label={above}{\xcancel{Suspicious}},
+      [{($0$, $U$)}, my edge label={above}{\xcancel{Quit}}]
+      [{($p + M - w - d_1$, $w - \delta$)}, my edge label={above}{\xcancel{Stay}}]
+      [C, my edge label={above}{Voice}, edge = black
+        [{($p + M - w - r - r_w$, $w - v + r_w$)},  my edge label={above}{Respond}, edge=black]
+        [E,  my edge label={above}{\xcancel{Ignore}}
+          [{($p + M - w - d_2$, $w - v$)},  my edge label={above}{Stay}]
+          [{($0$, $U - v$)},  my edge label={above}{\xcancel{Quit}}, edge = black]
+        ]
+      ]
+    ]
+]
+\end{forest}
+\end{center}
+\caption{Backwards Induction Solution for Case 1}
+\label{fig:case1}
+\end{figure}
+
+This SPE shows an ideal scenario where both the company and the employee work together to encourage honest practices, which is the ideal real world scenario to ensure a fair workplace for the employee. 
+
+\subsection{Case 2: Punishment for suspicious activities is low, cost of voicing out is high}
+In the converse case when the punishment for engaging in suspicious activities is low ($M > r + r_w > d_2$) and the cost of voicing out is high ($\delta > v$), the company will choose to engage in suspicious activities, and the employee will not voice out their concerns due to the high cost. This creates a scenario where there is no deterrent for the company from engaging in suspicious activities, and it will want to carry on getting the additional yield, $M$.
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{forest}
+for tree = {
+grow=south,
+minimum size=3ex,
+align=center,
+inner sep=2pt,
+edge={->},
+my edge label/.style 2 args={
+  edge label={node[midway, font=\sffamily\scriptsize, #1]{#2}},
+},
+s sep=10mm
+}
+[C
+    [{($p-w$, $w$)}, my edge label={above}{\xcancel{Honest}}]
+    [E,  my edge label={above}{Suspicious},
+      [{($0$, $U$)}, my edge label={above}{\xcancel{Quit}}, edge = black]
+      [{($p + M - w - d_1$, $w - \delta$)}, my edge label={above}{Stay}, edge = black]
+      [C, my edge label={above}{\xcancel{Voice}}
+        [{($p + M - w - r - r_w$, $w - v + r_w$)},  my edge label={above}{\xcancel{Respond}}]
+        [E,  my edge label={above}{Ignore}, edge=black
+          [{($p + M - w - d_2$, $w - v$)},  my edge label={above}{Stay}]
+          [{($0$, $U - v$)},  my edge label={above}{\xcancel{Quit}}]
+        ]
+      ]
+    ]
+]
+\end{forest}
+\end{center}
+\caption{Backwards Induction Solution for Case 2}
+\end{figure}
+
+
+\subsection{Solution Analysis}
+Due to the selfish nature of companies, if they can get away with engaging in suspicious activities, they will do it. In order to protect employees, we need to ensure that the cost of voicing out is low ($v < \delta$) and to ensure a fair system, harsh punishments need to be imposed on companies to deter them from engaging in suspicious activities (variables such as $r$ and $d_2$ should be larger than $M$).
+
+\subsection{Limitations}
+The solution to this game is is dependant on certain key assumptions, which may not hold true in real life scenarios. For example, the employee may not have enough bargaining power, and this may not have an effect on the company, which means that variables such as $r$, $r_w$, $d_2$ will be close to 0. This means that the company will never have an incentive to be honest.
+
+
+\section{Conclusion}
+
+Overall, we see that Game Theory is a useful tool to analyze the different decisions we can make throughout our career. While the models may at times be simplistic and not be representative of real life, the lessons learnt from each game are meaningful and can be applied.
+
+\appendix
+\begin{appendices}
+
+\section{Workings for Section \ref{sec:incomplete}}\label{app:incomplete-working}
+
+
+Expected Applicant Payoff:
+\begin{align*}
+    &\mathbb{E}[\text{Applicant Payoff}] = U_A(w)  \\
+    &= \int_0^{\beta} \mathbf{1}_{p-w\geq \theta}\left[(w - e + c\theta)\right] f(\theta) d\theta \\
+    &= \int_0^{p-w} (w - e + c\theta) \frac{1}{\beta} d\theta \\
+    &= \frac{1}{\beta}\int_0^{p-w} (w - e + c\theta) d\theta \\
+    &= \frac{1}{\beta} \left[\theta \left(w - e + c\frac{\theta}{2}\right)\right]_{0}^{p-w}\\
+    &= \frac{1}{\beta} (p-w)\left(w - e + c\frac{(p-w)}{2}\right)\\
+    &= \frac{p-w}{\beta} \left(\left(1 - \frac{c}{2}\right)w - e + \frac{cp}{2}\right)
+\end{align*}
+
+Now solving for first optimality conditions and differentiating with respect to $w$:
+\begin{align*}
+    \frac{dU_A}{dw} &= \left(\frac{p}{\beta} - \frac{w}{\beta}\right)\left(1 - \frac{c}{2}\right) - \frac{1}{\beta}\left(\left(1 - \frac{c}{2}\right)w - e + \frac{cp}{2}\right) \\
+    &= \frac{p-cp -2w+cw+e}{\beta}
+\end{align*}
+
+Equating to $0$
+\begin{align*}
+    \frac{p-cp -2w+cw+e}{\beta} &= 0 \\
+    p - cp - 2w + cw + e &= 0 \qquad \text{(Assuming $\beta > 0$)} \\
+    (2-c)w &= p - cp + e \\
+    w^* &= \frac{p-cp+e}{2-c}
+\end{align*}
+
+We also check the second derivative of the utility function to ensure that $w^*$ maximizes the utility function
+
+\begin{align*}
+    \frac{d^2U_A}{dw^2} &= \frac{c-2}{\beta} < 0 \qquad \text{(Since $c < 1$)}
+\end{align*}
+
+\section{Expected Employee Payoff}\label{app:expected-working}
+If the company offers contract 1:
+\begin{align*}
+    \mathbb{E}(\text{employee payoff for high effort})& = (1-p)( w_1-e) + (p)(w_1-e) \\
+    & = w_1 - e \\
+    \mathbb{E}(\text{employee payoff for low effort})& = w_1 
+\end{align*}
+
+However, if the company offers contract 2:
+\begin{align*}
+    \mathbb{E}(\text{employee payoff for high effort})& = (1-p)( w_2-e) + (p)(w_2-e+B) \\
+    & = w_2 - e + pB\\
+    \mathbb{E}(\text{Employee payoff for low effort})& = w_2
+\end{align*}
+
+\subsection{Shirk Expected Payoff Working}
+\begin{align*}
+    \mathbb{E}(\text{employee's payoff}) & = p_a(w_2) + p_b(w_2 + B) + (1-p_a-P_b)(U_o) \\
+    & = p_aw_2 + p_aB + p_bw_2 + U_o(1-p_a-p_b) \\
+    & = p_aB + w_2 - (1-p_b-p_a)w_2 + U_o(1-p_a-p_b)\\
+    & = p_aB + w_2 - (1-p_b-p_a)(w_2-U_o)  
+\end{align*}
+\end{appendices}
+\end{document}
